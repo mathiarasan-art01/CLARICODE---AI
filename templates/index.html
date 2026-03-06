@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClariCode Website</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="static/style.css">
+
+</head>
+
+<body>
+
+<div class="bg-animation"></div>
+
+<div class="main-header">ClariCode</div>
+
+<div class="container">
+
+  <!-- ── Analysis Section ── -->
+  <div class="title-bar">💻 Analysis Code</div>
+
+  <div class="code-section">
+    <div class="textarea-wrapper">
+      <textarea id="codeInput" placeholder="Paste your code here..."></textarea>
+      <div class="floating-actions">
+        <label class="upload-icon">
+          +
+          <input type="file" id="fileUpload" multiple>
+        </label>
+        <button class="send-btn" onclick="analyzeCode()">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="response-section">
+    <h3>AI Code Response</h3>
+    <div id="codeResponse" class="response-box"></div>
+  </div>
+
+
+  <!-- ── Ask AI Section ── -->
+  <div class="title-bar">💬 Ask AI</div>
+
+  <div class="chat-section">
+    <div class="chat-wrapper">
+      <input
+        type="text"
+        id="chatInput"
+        placeholder="Ask anything..."
+        onkeypress="handleChat(event)">
+      <button class="chat-send-btn" onclick="sendChat()">➤</button>
+    </div>
+    <div id="chatResponse" class="response-box"></div>
+  </div>
+
+
+  <!-- ── Online Compiler Section ── -->
+  <div class="title-bar">⚡ Online Compiler</div>
+
+  <div class="compiler-section">
+
+    <!-- Top controls row -->
+    <div class="compiler-controls">
+
+      <!-- Language selector (left) -->
+      <div class="compiler-lang-group">
+        <label class="compiler-label-text">Language:</label>
+        <select id="languageSelect" class="compiler-select">
+          <option value="python">Python 3</option>
+          <option value="javascript">JavaScript</option>
+          <option value="c">C</option>
+          <option value="cpp">C++</option>
+          <option value="java">Java</option>
+        </select>
+      </div>
+
+      <!-- Code Conversion row (right) -->
+      <div class="compiler-convert-group">
+        <label class="compiler-label-text">Convert:</label>
+        <select id="convertFromLang" class="compiler-select compiler-select-sm">
+          <option value="python">Python</option>
+          <option value="javascript">JavaScript</option>
+          <option value="c">C</option>
+          <option value="cpp">C++</option>
+          <option value="java">Java</option>
+        </select>
+        <span class="convert-arrow">→</span>
+        <select id="convertToLang" class="compiler-select compiler-select-sm">
+          <option value="python">Python</option>
+          <option value="javascript">JavaScript</option>
+          <option value="c">C</option>
+          <option value="cpp">C++</option>
+          <option value="java">Java</option>
+        </select>
+        <button class="convert-btn" onclick="convertCode()">Convert</button>
+      </div>
+
+    </div>
+
+    <!-- Two code slots side by side -->
+    <div class="dual-code-row">
+
+      <!-- Slot 1 -->
+      <div class="code-slot">
+        <div class="code-slot-header">
+          <span class="code-slot-badge badge-1">Code 1</span>
+          <span class="code-slot-hint">Primary code</span>
+        </div>
+        <textarea
+          id="compilerCode"
+          placeholder="Write / paste your primary code here..."
+          class="compiler-textarea slot-textarea"></textarea>
+      </div>
+
+      <!-- Slot 2 -->
+      <div class="code-slot">
+        <div class="code-slot-header">
+          <span class="code-slot-badge badge-2">Code 2</span>
+          <span class="code-slot-hint">Optional second code</span>
+        </div>
+        <textarea
+          id="compilerCode2"
+          placeholder="Paste an optional second code here (leave empty to skip)..."
+          class="compiler-textarea slot-textarea"></textarea>
+      </div>
+
+    </div>
+
+    <!-- Run button -->
+    <button class="send-btn run-btn" onclick="runCompiler()">&#9654; Run Code</button>
+
+    <!-- Compiler output -->
+    <div id="compilerOutput" class="response-box compiler-output-box"></div>
+
+    <!-- Note -->
+    <div class="compiler-ai-note">
+      🤖 AI error analysis &amp; explanations appear in <strong>CLARICODE</strong> – TECH UNSTOPPIE
+    </div>
+
+    <!-- Which-code modal (shown when both slots have code) -->
+    <div id="codeChoiceModal" class="code-choice-modal" style="display:none;">
+      <div class="code-choice-box">
+        <div class="code-choice-title">⚡ Which code do you want to run?</div>
+        <div class="code-choice-buttons">
+          <button class="choice-btn choice-btn-1" onclick="executeChoice(1)">&#9654; Run Code 1</button>
+          <button class="choice-btn choice-btn-2" onclick="executeChoice(2)">&#9654; Run Code 2</button>
+          <button class="choice-btn choice-btn-cancel" onclick="closeModal()">&#10005; Cancel</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div><!-- /.container -->
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+<script src="{{ url_for('static', filename='compiler.js') }}"></script>
+
+</body>
+</html>
